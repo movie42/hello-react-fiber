@@ -1,45 +1,50 @@
-import * as THREE from "three";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/rapier";
+import { Suspense } from "react";
+import { Cube } from "./Cube";
+import { SpinningBox } from "./SpinningBox";
+import { Walls } from "./Wall";
 
-import { useRef, useState } from "react";
-import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
-
-function Box(props: ThreeElements["mesh"]) {
-  const ref = useRef<THREE.Mesh>(null!);
-  const [hovered, hover] = useState(false);
-  const [clicked, click] = useState(false);
-  useFrame((state, delta) => (ref.current.rotation.x += delta));
+const Scene = () => {
   return (
-    <mesh
-      {...props}
-      ref={ref}
-      scale={clicked ? 1.5 : 1}
-      onClick={() => click(!clicked)}
-      onPointerOver={() => hover(true)}
-      onPointerOut={() => hover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-    </mesh>
+    <group>
+      <Cube position={[7, 8, 0]} />
+      <Walls />
+    </group>
   );
-}
+};
 
 const App = () => {
+  const distance = 80;
+  const angle = (45 * Math.PI) / 180;
+  const cameraX = distance * Math.sin(angle);
+  const cameraY = distance * Math.sin(angle);
+  const cameraZ = distance * Math.cos(angle);
+
   return (
-    <Canvas shadows camera={{ position: [4, 2.5, 8], fov: 35 }}>
-      <ambientLight intensity={Math.PI / 2} />
-      <spotLight
-        position={[10, 10, 10]}
-        angle={0.15}
-        penumbra={1}
-        decay={0}
-        intensity={Math.PI}
+    <Canvas shadows style={{ width: "100vw", height: "100vh" }}>
+      <PerspectiveCamera
+        makeDefault
+        position={[cameraX, cameraY, cameraZ]}
+        fov={75}
       />
-      <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
-      <OrbitControls />
-      <Environment preset="city" />
+      <Suspense fallback={<SpinningBox />}>
+        <Physics>
+          <Scene />
+        </Physics>
+        <OrbitControls
+          enableZoom={true}
+          enableRotate={true}
+          enablePan={true}
+          zoomSpeed={0.5}
+          rotateSpeed={0.5}
+          panSpeed={0.5}
+          minPolarAngle={Math.PI / 12}
+          maxPolarAngle={Math.PI / 2.4}
+          target={[0, 0, 0]}
+        />
+      </Suspense>
     </Canvas>
   );
 };
