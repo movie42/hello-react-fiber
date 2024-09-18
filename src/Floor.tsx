@@ -2,9 +2,10 @@ import { RigidBody } from "@react-three/rapier";
 
 const angleToRadians = (angleInDeg: number) => (Math.PI / 180) * angleInDeg;
 
-export const Walls = () => {
+export const Floor = () => {
   return (
     <RigidBody
+      name="floor"
       colliders="cuboid"
       lockTranslations={true}
       lockRotations
@@ -12,8 +13,8 @@ export const Walls = () => {
       rotation={[angleToRadians(-90), 0, 0]}
     >
       <mesh receiveShadow>
-        <planeGeometry args={[1000, 1000]} />
-        <meshNormalMaterial />
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color="#f4b88c" />
       </mesh>
     </RigidBody>
   );
