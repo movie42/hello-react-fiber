@@ -1,8 +1,4 @@
-import {
-  KeyboardControls,
-  OrbitControls,
-  PerspectiveCamera
-} from "@react-three/drei";
+import { KeyboardControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Suspense, useMemo } from "react";
@@ -54,31 +50,20 @@ const App = () => {
   const cameraZ = distance * Math.cos(angle);
 
   return (
-    <KeyboardControls map={keyMap}>
-      <Canvas shadows style={{ width: "100vw", height: "100vh" }}>
-        <PerspectiveCamera
-          makeDefault
-          position={[cameraX, cameraY, cameraZ]}
-          fov={75}
-        />
-        <Suspense fallback={<SpinningBox />}>
-          <Physics>
+    <Canvas shadows style={{ width: "100vw", height: "100vh" }}>
+      <Suspense fallback={<SpinningBox />}>
+        <Physics>
+          <KeyboardControls map={keyMap}>
             <Scene />
-          </Physics>
-          <OrbitControls
-            enableZoom={true}
-            enableRotate={true}
-            enablePan={true}
-            zoomSpeed={0.5}
-            rotateSpeed={0.5}
-            panSpeed={0.5}
-            minPolarAngle={Math.PI / 12}
-            maxPolarAngle={Math.PI / 2.4}
-            target={[0, 0, 0]}
-          />
-        </Suspense>
-      </Canvas>
-    </KeyboardControls>
+            <PerspectiveCamera
+              makeDefault
+              position={[cameraX, cameraY, cameraZ]}
+              fov={50}
+            />
+          </KeyboardControls>
+        </Physics>
+      </Suspense>
+    </Canvas>
   );
 };
 
