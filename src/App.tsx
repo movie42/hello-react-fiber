@@ -5,6 +5,7 @@ import { Suspense, useMemo } from "react";
 import { Cube } from "./Cube";
 import { Floor } from "./Floor";
 import { SpinningBox } from "./SpinningBox";
+import { SpeedTextTunnel } from "./speedTextTunel";
 
 export const Controls = {
   forward: "forward",
@@ -50,20 +51,23 @@ const App = () => {
   const cameraZ = distance * Math.cos(angle);
 
   return (
-    <Canvas shadows style={{ width: "100vw", height: "100vh" }}>
-      <Suspense fallback={<SpinningBox />}>
-        <Physics>
-          <KeyboardControls map={keyMap}>
-            <Scene />
-            <PerspectiveCamera
-              makeDefault
-              position={[cameraX, cameraY, cameraZ]}
-              fov={50}
-            />
-          </KeyboardControls>
-        </Physics>
-      </Suspense>
-    </Canvas>
+    <>
+      <Canvas shadows style={{ width: "100vw", height: "100vh" }}>
+        <Suspense fallback={<SpinningBox />}>
+          <Physics>
+            <KeyboardControls map={keyMap}>
+              <Scene />
+              <PerspectiveCamera
+                makeDefault
+                position={[cameraX, cameraY, cameraZ]}
+                fov={50}
+              />
+            </KeyboardControls>
+          </Physics>
+        </Suspense>
+      </Canvas>
+      <SpeedTextTunnel.Out />
+    </>
   );
 };
 
