@@ -64,7 +64,7 @@ export const Cube = ({ position }: { position: NumberTuple }) => {
     handleMovement();
 
     if (!state.controls) {
-      const cameraPosition = _cameraPosition.set(0, 3, 10).add(cubePosition);
+      const cameraPosition = _cameraPosition.set(0, 10, 20).add(cubePosition);
       // const cameraRotation = new THREE.Euler(cubeRef.current.angle)
       state.camera.position.copy(cameraPosition);
       // state.camera.rotation.copy(cameraRotation);
