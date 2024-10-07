@@ -45,6 +45,7 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
     tl.current = gsap.timeline();
     if (!ref.current || !libraryRef.current || !atticRef.current) return;
 
+    // VERTICAL ANIMATION
     tl.current.to(
       ref.current.position,
       {
@@ -54,6 +55,7 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       0
     );
 
+    // Office Rotation
     tl.current.to(
       ref.current.rotation,
       { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
@@ -61,16 +63,37 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
     );
     tl.current.to(
       ref.current.rotation,
-      { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
+      { duration: 1, x: 0, y: -Math.PI / 6, z: 0 },
       1
     );
 
-    tl.current.to(ref.current.position, { duration: 1, x: -1, y: 2 }, 0);
-    tl.current.to(ref.current.position, { duration: 1, x: 1, y: 2 }, 1);
+    // Office movement
+    tl.current.to(
+      ref.current.position,
+      {
+        duration: 1,
+        x: -1,
+        z: 2
+      },
+      0
+    );
+    tl.current.to(
+      ref.current.position,
+      {
+        duration: 1,
+        x: 1,
+        z: 2
+      },
+      1
+    );
 
+    // LIBRARY FLOOR
     tl.current.from(
-      libraryRef.current?.position,
-      { duration: 0.5, x: -2 },
+      libraryRef.current.position,
+      {
+        duration: 0.5,
+        x: -2
+      },
       0.5
     );
     tl.current.from(
@@ -82,13 +105,34 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       0
     );
 
+    // ATTIC
+    tl.current.from(
+      atticRef.current.position,
+      {
+        duration: 1.5,
+        y: 2
+      },
+      0
+    );
+
     tl.current.from(
       atticRef.current.rotation,
-      { duration: 0.5, y: Math.PI / 2 },
+      {
+        duration: 0.5,
+        y: Math.PI / 2
+      },
       1
     );
-    tl.current.from(atticRef.current.position, { duration: 1.5, y: 2 }, 0);
-    tl.current.from(atticRef.current.position, { duration: 0.5, z: -2 }, 1.5);
+
+    tl.current.from(
+      atticRef.current.position,
+      {
+        duration: 0.5,
+
+        z: -2
+      },
+      1.5
+    );
   }, []);
 
   return (
