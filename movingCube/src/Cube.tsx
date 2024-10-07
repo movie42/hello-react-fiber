@@ -24,7 +24,7 @@ export const Cube = ({ position }: { position: NumberTuple }) => {
       return;
     }
 
-    cubeRef.current.applyImpulse({ x: 0, y: 5, z: 0 }, true);
+    cubeRef.current.applyImpulse({ x: 0, y: 20, z: 0 }, true);
   };
 
   const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
