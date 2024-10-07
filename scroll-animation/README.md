@@ -54,3 +54,7 @@ tl.current.from(atticRef.current.position, { duration: 1.5, y: 2 }, 0);
 
 즉, 이 코드는 gsap.timeline()을 통해 타임라인을 만들고, ref.current와 같은 요소들의 애니메이션을 정의하는데, DOM이 렌더링된 이후 곧바로 실행되도록 설계된 것입니다.
 [출처 : ChatGPT 4o]
+
+# 느낀점
+
+지금까지 구현을 하면서 회전이나 이동이 좀 복잡하다고 생각 되었다. 3D는 x,y,z를 transform하는 거라 일단 많이 만들어보고 경험치를 충분히 쌓지 않으면 구현부터 좀 난해할 것 같다.
