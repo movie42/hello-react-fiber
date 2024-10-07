@@ -53,6 +53,7 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       },
       0
     );
+
     tl.current.to(
       ref.current.rotation,
       { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
@@ -63,6 +64,9 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
       1
     );
+
+    tl.current.to(ref.current.position, { duration: 1, x: -1, y: 2 }, 0);
+    tl.current.to(ref.current.position, { duration: 1, x: 1, y: 2 }, 1);
 
     tl.current.from(
       libraryRef.current?.position,
