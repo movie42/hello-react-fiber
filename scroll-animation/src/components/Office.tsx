@@ -53,18 +53,48 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       },
       0
     );
+    tl.current.to(
+      ref.current.rotation,
+      { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
+      0
+    );
+    tl.current.to(
+      ref.current.rotation,
+      { duration: 1, x: 0, y: Math.PI / 6, z: 0 },
+      1
+    );
 
     tl.current.from(
       libraryRef.current?.position,
       { duration: 0.5, x: -2 },
       0.5
     );
+    tl.current.from(
+      libraryRef.current.rotation,
+      {
+        duration: 0.5,
+        y: -Math.PI / 2
+      },
+      0
+    );
 
+    tl.current.from(
+      atticRef.current.rotation,
+      { duration: 0.5, y: Math.PI / 2 },
+      1
+    );
     tl.current.from(atticRef.current.position, { duration: 1.5, y: 2 }, 0);
+    tl.current.from(atticRef.current.position, { duration: 0.5, z: -2 }, 1.5);
   }, []);
 
   return (
-    <group {...props} dispose={null} ref={ref}>
+    <group
+      {...props}
+      dispose={null}
+      ref={ref}
+      position={[0.5, -1, -1]}
+      rotation={[0, -Math.PI / 3, 0]}
+    >
       <mesh geometry={nodes["01_office"].geometry} material={materials["01"]} />
       <group position={[0, 2.114, -2.23]}>
         <group ref={libraryRef}>
