@@ -31,6 +31,8 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("./models/WawaOffice.glb") as GLTFResult;
   const ref = useRef<THREE.Group>(null);
   const tl = useRef<GSAPTimeline>();
+  const libraryRef = useRef<THREE.Group>(null);
+  const atticRef = useRef<THREE.Group>(null);
 
   const scroll = useScroll();
 
@@ -41,7 +43,7 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
 
   useLayoutEffect(() => {
     tl.current = gsap.timeline();
-    if (!ref.current) return;
+    if (!ref.current || !libraryRef.current || !atticRef.current) return;
 
     tl.current.to(
       ref.current.position,
@@ -51,21 +53,36 @@ export function Office(props: JSX.IntrinsicElements["group"]) {
       },
       0
     );
+
+    tl.current.from(
+      libraryRef.current?.position,
+      { duration: 0.5, x: -2 },
+      0.5
+    );
+
+    tl.current.from(atticRef.current.position, { duration: 1.5, y: 2 }, 0);
   }, []);
 
   return (
     <group {...props} dispose={null} ref={ref}>
       <mesh geometry={nodes["01_office"].geometry} material={materials["01"]} />
-      <mesh
-        geometry={nodes["02_library"].geometry}
-        material={materials["02"]}
-        position={[0, 2.114, -2.23]}
-      />
-      <mesh
-        geometry={nodes["03_attic"].geometry}
-        material={materials["03"]}
-        position={[-1.97, 4.227, -2.199]}
-      />
+      <group position={[0, 2.114, -2.23]}>
+        <group ref={libraryRef}>
+          <mesh
+            geometry={nodes["02_library"].geometry}
+            material={materials["02"]}
+          />
+        </group>
+      </group>
+
+      <group position={[-1.97, 4.227, -2.199]}>
+        <group ref={atticRef}>
+          <mesh
+            geometry={nodes["03_attic"].geometry}
+            material={materials["03"]}
+          />
+        </group>
+      </group>
     </group>
   );
 }
